@@ -14,6 +14,20 @@ def get_synonyms(soup):
     synonyms = []
     for synonym in soup.select('p[class*="synonymer-li-underline"]'):
         synonyms.append(synonym.text)
+
+    return synonyms
+
+def desperete_attempt(soup, word):
+    synonyms = []
+    target_div = soup.find("div", class_="synonymer-li-underline")
+
+    if (len(synonyms) == 0):
+        try:
+            if target_div:
+                synonyms = [a.text for a in target_div.find_all("a")]
+                synonyms = synonyms[:3]
+        except:
+            pass
     return synonyms
 
 def convert_to_string(synonyms):
@@ -97,16 +111,22 @@ def main():
                 continue
             #Om det inte finns några synonymer, kolla om det finns liknande ord.
             if(len(synonyms) == 0):
-                new_synonym = exsists_simillary_words(word)
-                new_soup = get_data(new_synonym)
+                word = exsists_simillary_words(word)
+                new_soup = get_data(word)
                 synonyms = get_synonyms(new_soup)
+                if(len(synonyms) == 0):
+                    synonyms =  desperete_attempt(new_soup, word)
+                    
     
             synonym_string = convert_to_string(synonyms)
             first_synonyms = get_first(3, synonym_string)
             print(word + ": " + str(first_synonyms))
             print_tofile(word, first_synonyms)
         except:
-            print(word + ": The word does not exsist")
+            try:
+                print(word + ": The word does not exsist")
+            except:
+                pass
     #Catch execption if the word does not exsist
     
 
