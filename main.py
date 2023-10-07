@@ -76,8 +76,14 @@ def exsists_simillary_words(word):
 
         return str(new_synonym)
         
-        
+def print_tofile(word, first_synonyms):
+    with open("output.txt", "a") as file:
+        file.write(word + ": " + str(first_synonyms) + "\n")       
+
 def main():
+    with open("output.txt", "w") as file:
+        file.write("")
+    file.close()
     #Läs in data från text fil.
     input_words = read_inputfile()
     for word in input_words:
@@ -98,11 +104,10 @@ def main():
             synonym_string = convert_to_string(synonyms)
             first_synonyms = get_first(3, synonym_string)
             print(word + ": " + str(first_synonyms))
+            print_tofile(word, first_synonyms)
         except:
             print(word + ": The word does not exsist")
     #Catch execption if the word does not exsist
-    
-
     
 
 if __name__ == "__main__":
