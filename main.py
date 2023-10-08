@@ -109,18 +109,21 @@ def main():
             if synonyms is None:
                 print("The word does not exsist")
                 continue
-            #Om det inte finns några synonymer, kolla om det finns liknande ord.
+            #Om det inte finns några synonymer, kolla om det finns liknande ord. "Menar du detta:"
             if(len(synonyms) == 0):
                 word = exsists_simillary_words(word)
                 new_soup = get_data(word)
                 synonyms = get_synonyms(new_soup)
+                #Kolla om det finns andra beskrivningar av ordet; eller i andra taggar, som inte är p taggar.
                 if(len(synonyms) == 0):
                     synonyms =  desperete_attempt(new_soup, word)
-                    
-    
+            #Konverterar från en lång sträng till en lista med synonymer.
             synonym_string = convert_to_string(synonyms)
+            #Hämtar de första 3 synonymer.
             first_synonyms = get_first(3, synonym_string)
+            #Skriver ut till terminalen.
             print(word + ": " + str(first_synonyms))
+            #Skriver ut till fil.
             print_tofile(word, first_synonyms)
         except:
             try:
