@@ -21,7 +21,7 @@ chmod +x main.py: while standing in the directory.
 ./main.py
 ```
 ### Usage:
-in the input fil, put all the words you'd like to get the synonyms of. Then run the code: the synonyms of the words will appear in the output.txt.
+in the input.txt, put all the words you'd like to get the synonyms of. Then run the code: the synonyms of the words will appear in the output.txt.
 
 
 
